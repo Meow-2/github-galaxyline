@@ -545,34 +545,43 @@ function M.setup(tbl)
     gls.short_line_left[1] = {
         BufferType = {
             provider = function()
-                set_hl('BufferType', colors.bg, mode_color[vim.fn.mode()])
-                return '  ' .. vim.bo.filetype:gsub('^%l', string.upper) .. ' '
+                set_hl('BufferType', mode_color[vim.fn.mode()], mode_color_alpha[vim.fn.mode()])
+                -- return file_with_icons(file, '[+]', '[-]')
+                return file_with_icons(
+                    ' ' .. vim.bo.filetype:gsub('^%l', string.upper) .. ' ',
+                    '[+]',
+                    '[-]'
+                )
+                -- return '  ' .. vim.bo.filetype:gsub('^%l', string.upper) .. ' '
             end,
         },
     }
 
-    gls.short_line_left[2] = {
-        Separator8 = {
-            provider = function()
-                set_hl('Separator8', mode_color[vim.fn.mode()], mode_color_alpha[vim.fn.mode()])
-                return ' '
-            end,
-        },
-    }
+    -- gls.short_line_left[2] = {
+    --     Separator8 = {
+    --         provider = function()
+    --             set_hl('Separator8', mode_color[vim.fn.mode()], mode_color_alpha[vim.fn.mode()])
+    --             return ' '
+    --         end,
+    --     },
+    -- }
+
+    -- gls.short_line_right[1] = {
+    --     Separator9 = {
+    --         provider = function()
+    --             set_hl('Separator9', mode_color[vim.fn.mode()], mode_color_alpha[vim.fn.mode()])
+    --             return ''
+    --         end,
+    --     },
+    -- }
 
     gls.short_line_right[1] = {
-        Separator9 = {
-            provider = function()
-                set_hl('Separator9', mode_color[vim.fn.mode()], mode_color_alpha[vim.fn.mode()])
-                return ''
-            end,
-        },
-    }
-    gls.short_line_right[2] = {
         ShortPerCent = {
             provider = function()
-                set_hl('ShortPerCent', colors.bg, mode_color[vim.fn.mode()])
-                return ' ' .. fileinfo.current_line_percent()
+                set_hl('ShortPerCent', mode_color[vim.fn.mode()], mode_color_alpha[vim.fn.mode()])
+                local line = vim.fn.line('.')
+                local column = vim.fn.col('.')
+                return string.format('  %3d:%-2d ', line, column)
             end,
         },
     }
