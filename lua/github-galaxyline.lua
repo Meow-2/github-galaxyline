@@ -59,10 +59,7 @@ function M.setup(tbl)
     end --}}}
 
     local function buffer_is_readonly() --{{{
-        if vim.bo.filetype == 'help' then
-            return false
-        end
-        return vim.bo.readonly
+        return vim.bo.readonly or not vim.bo.modifiable
     end --}}}
 
     local function file_with_icons(file, modified_icon, readonly_icon) --{{{
