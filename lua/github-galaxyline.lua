@@ -169,7 +169,7 @@ function M.setup(tbl)
         ['!'] = 'SHELL',
     } --}}}
 
-    local colors_light = { --{{{
+    M.colors_light = { --{{{
         bg = '#ffffff',
         -- bg2 = '#f6f8fa',
         bg2 = '#f4f7fa',
@@ -181,6 +181,7 @@ function M.setup(tbl)
         yellow = '#f9c513',
         cyan = '#1b7c83',
         bright_magenta = '#8a63d2',
+        bright_blue = '#218bff',
         error = '#cb2431',
         warning = '#bf8803',
         info = '#2188ff',
@@ -190,12 +191,13 @@ function M.setup(tbl)
         gitdelete = '#d73a49',
     } --}}}
 
-    local colors_dark = { --{{{
+    M.colors_dark = { --{{{
         bg = '#24292e',
         bg2 = '#1f252a',
         fg = '#c9d1d9',
         red = '#ea4a5a',
         blue = '#2188ff',
+        bright_blue = '#79b8ff',
         green = '#34d058',
         orange = '#d18616',
         yellow = '#ffea7f',
@@ -210,7 +212,27 @@ function M.setup(tbl)
         gitdelete = '#ea4a5a',
     } --}}}
 
-    local colors = style == 'light' and colors_light or colors_dark
+    M.colors_warm = { --{{{
+        bg = '#ffffff',
+        bg2 = '#efead4',
+        fg = '#24292e',
+        red = '#d73a49',
+        blue = '#22863a',
+        green = '#218bff',
+        orange = '#d18616',
+        yellow = '#f9c513',
+        cyan = '#1b7c83',
+        bright_magenta = '#8a63d2',
+        error = '#cb2431',
+        warning = '#bf8803',
+        info = '#2188ff',
+        hint = '#1b7c83',
+        gitadd = '#22863a',
+        gitchange = '#e36209',
+        gitdelete = '#d73a49',
+    } --}}}
+
+    local colors = M['colors_' .. style]
 
     local mode_color = { --{{{
         ['!'] = colors.red,
@@ -237,14 +259,15 @@ function M.setup(tbl)
 
     local mode_color_alpha = {}
     local mode_color_fg_alpha = {}
-    if style == 'light' then
-        mode_color_alpha = get_mode_color_alpha(mode_color, lighten, 0.2)
-        mode_color_fg_alpha = get_mode_color_alpha(mode_color, darken, 0.4, colors.fg)
-    -- set Background Highlights
-    elseif style == 'dark' then
+
+    if style == 'dark' then
         mode_color_alpha = get_mode_color_alpha(mode_color, darken, 0.6)
         mode_color_fg_alpha = get_mode_color_alpha(mode_color, lighten, 0.4, colors.fg)
+    else
+        mode_color_alpha = get_mode_color_alpha(mode_color, lighten, 0.2)
+        mode_color_fg_alpha = get_mode_color_alpha(mode_color, darken, 0.4, colors.fg)
     end
+
     -- set Background Highlights
     vim.api.nvim_set_hl(0, 'StatusLine', { fg = colors.bg2, bg = colors.bg2 })
     vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = darken(colors.fg, 0.5), bg = colors.bg2 })
