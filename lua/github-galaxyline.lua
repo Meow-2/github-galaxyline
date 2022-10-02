@@ -193,7 +193,7 @@ function M.setup(tbl)
 
     M.colors_dark = { --{{{
         bg = '#24292e',
-        bg2 = '#1f252a',
+        bg2 = '#1f2428',
         fg = '#c9d1d9',
         red = '#ea4a5a',
         blue = '#2188ff',
@@ -261,7 +261,7 @@ function M.setup(tbl)
     local mode_color_fg_alpha = {}
 
     if style == 'dark' then
-        mode_color_alpha = get_mode_color_alpha(mode_color, darken, 0.6)
+        mode_color_alpha = get_mode_color_alpha(mode_color, darken, 0.2, colors.bg2)
         mode_color_fg_alpha = get_mode_color_alpha(mode_color, lighten, 0.4, colors.fg)
     else
         mode_color_alpha = get_mode_color_alpha(mode_color, lighten, 0.2)
